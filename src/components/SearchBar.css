@@ -1,0 +1,102 @@
+.searchbar-container {
+  display: flex;
+  margin-top: 20px;
+  align-items: end;
+}
+/* SearchBar.css */
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 1000px;
+  margin-left: 200px;
+  margin-right: 150px;
+}
+
+form {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  height: 40px;
+  align-items: end;
+}
+
+input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 16px;
+}
+
+button {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.collections-container {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+  max-width: 100%;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.collection-card {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  gap: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.collection-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.collection-title {
+  padding: 8px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.collections-container-text {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 10px;
+  justify-content: space-between;
+}
+
+.collections-container-text li {
+  cursor: pointer;
+}
+
+.collections-container-text h3 {
+  font-weight: bold;
+}

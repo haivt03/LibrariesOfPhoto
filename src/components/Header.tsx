@@ -63,6 +63,9 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
               {topic.title}
             </li>
           ))}
+          <li className="topic-item">
+            See all
+          </li>
         </ul>
       </nav>
     </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPhotos } from '../api/unsplash';
 import { PhotoCard } from './PhotoCard';
+import './PhotoGallery.css'; 
 
 interface PhotoGalleryProps {
   query?: string;
@@ -14,25 +15,26 @@ export function PhotoGallery({ query = '' }: PhotoGalleryProps) {
     queryKey: ['photos', query, page],
     queryFn: () => fetchPhotos(query, page),
     placeholderData: () => [],
-    staleTime: 5000,
+    staleTime: 1000,
   });
 
   if (isLoading) return <p>Loading...</p>;
   if (error instanceof Error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className=''>
-      <div className="grid grid-cols-3 gap-4">
+    <div className="photo-gallery-container">
+      <div className="photo-grid">
         {data?.map((photo: any) => (
-          <PhotoCard key={photo.id} photo={photo} />
+          <div key={photo.id} className="photo-card">
+            <PhotoCard photo={photo} />
+          </div>
         ))}
       </div>
 
-      <div className="flex justify-between mt-4">
+      <div className="pagination">
         <button
           onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
           disabled={page === 1}
-          className="bg-gray-300 px-4 py-2 rounded"
         >
           Previous
         </button>
@@ -40,7 +42,6 @@ export function PhotoGallery({ query = '' }: PhotoGalleryProps) {
         <button
           onClick={() => setPage((prevPage) => prevPage + 1)}
           disabled={isFetching}
-          className="bg-gray-300 px-4 py-2 rounded"
         >
           Next
         </button>
