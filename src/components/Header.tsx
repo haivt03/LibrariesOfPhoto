@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Header.css";
+import { fecthTopic } from "../api/unsplash";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
 }
 
+interface Topic {
+  id: string;
+  title: string;
+}
+
 export function HeaderHomePage({ onSearch }: SearchBarProps) {
   const [input, setInput] = useState("");
+  const [topics, setTopics] = useState<Topic[]>([]);
   const navigate = useNavigate();
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch(input);
@@ -17,32 +26,47 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
     navigate("/home");
   };
 
+  useEffect(() => {
+    const loadTopics = async () => {
+      try {
+        const data = await fecthTopic();
+        setTopics(data);
+      } catch (error) {
+        console.error("Failed to fetch topics:", error);
+      }
+    };
+
+    loadTopics();
+  }, []);
+
   return (
-    <div className="container" >
-      <button onClick={home} className="button-home">
-        Unsplashy
-      </button>
-      <form
-        onSubmit={handleSearch}
-        className="flex items-center space-x-2 mb-4"
-      >
+    <div className="header-container">
+      <form onSubmit={handleSearch} className="search-form">
+        <button onClick={home} className="button-home">
+          Unsplashy
+        </button>
         <input
           type="text"
           placeholder="Search photos..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="border px-4 py-2 rounded w-full"
+          className="search-input"
         />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
+        <button type="submit" className="search-button">
           Search
         </button>
       </form>
-      <nav>
-
+      <nav className="topics-nav">
+        <ul className="topics-list">
+          {topics.map((topic) => (
+            <li key={topic.id} className="topic-item">
+              {topic.title}
+            </li>
+          ))}
+        </ul>
       </nav>
     </div>
   );
 }
+
+

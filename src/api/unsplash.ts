@@ -48,8 +48,8 @@ export async function fecthStatisticsByPhoto(id: string): Promise<any> {
   return data;
 }
 
-export async function fecthTopic(id: string): Promise<any> {
-  const url = `https://api.unsplash.com/topics/${id}?client_id=${accessKey}`;
+export async function fecthTopic(): Promise<any> {
+  const url = `https://api.unsplash.com/topics?client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -57,8 +57,9 @@ export async function fecthTopic(id: string): Promise<any> {
   const data = await response.json();
   return data;
 }
-export async function fecthCollection(id: string): Promise<any> {
-  const url = `https://api.unsplash.com/collections/${id}?client_id=${accessKey}`;
+
+export async function fecthCollection(): Promise<any> {
+  const url = `https://api.unsplash.com/collections?client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Network response was not ok");
