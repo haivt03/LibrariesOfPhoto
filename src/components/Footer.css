@@ -1,0 +1,115 @@
+.footer {
+  background-color: white;
+  color: #000;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.footer-column {
+  flex: 1;
+  text-align: left;
+}
+
+.footer-column h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.footer-column p {
+  font-size: 1rem;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.footer-column.logo-section img {
+    max-width: 100%; 
+    height: auto;    
+    width: 150px;    
+    display: block;  
+    margin: 0 auto; 
+  }
+  
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-links a:hover {
+  color: gray;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.footer-social {
+  display: flex;
+  text-align: center;display: flex;
+  justify-content: center; 
+  gap: 1rem; 
+  margin-bottom: 1rem; 
+}
+
+.footer-social a {
+  color: #000;
+  margin: 0 10px;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover {
+  color: gray;
+}
+
+.footer-bottom p {
+  color: #aaa;
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+hr {
+  border-color: #333;
+}
+
+/* Logo section styling */
+.logo-section {
+  text-align: left;
+}
+
+.logo-section h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.logo-section p {
+  font-size: 14px;
+  color: #aaa;
+}

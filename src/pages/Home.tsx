@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { SearchBar } from '../components/SearchBar';
 import { PhotoGallery } from '../components/PhotoGrallery';
+import { HeaderHomePage } from '../components/Header';
+import Footer from '../components/Footer';
 
 export function Home() {
   const [query, setQuery] = useState('');
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Unsplashy</h1>
+      <HeaderHomePage onSearch={setQuery}/>
       <SearchBar onSearch={setQuery} />
       <PhotoGallery query={query} />
+      <Footer/>
     </div>
   );
 }

@@ -21,7 +21,7 @@ export function PhotoGallery({ query = '' }: PhotoGalleryProps) {
   if (error instanceof Error) return <p>Error: {error.message}</p>;
 
   return (
-    <div>
+    <div className=''>
       <div className="grid grid-cols-3 gap-4">
         {data?.map((photo: any) => (
           <PhotoCard key={photo.id} photo={photo} />
