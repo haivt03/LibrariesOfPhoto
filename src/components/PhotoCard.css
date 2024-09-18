@@ -4,6 +4,10 @@
     max-width: 100%;
     margin: 0 auto;
   }
+
+  .photo-card-container:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+}
   
   .photo-card-card-container {
     background-color: white;

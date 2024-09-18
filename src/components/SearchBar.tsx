@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { fecthCollection } from "../api/unsplash";
+import { fetchCollection } from "../api/unsplash";
 import "./SearchBar.css";
 
 interface SearchBarProps {
@@ -21,7 +21,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
     isLoading,
   } = useQuery({
     queryKey: ["collections"],
-    queryFn: () => fecthCollection(5),
+    queryFn: () => fetchCollection(5),
     placeholderData: () => [],
     staleTime: 1000,
   });
@@ -29,10 +29,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
   return (
     <div className="searchbar-container">
       <div className="form-container">
-        <form
-          onSubmit={handleSearch}
-          className="flex space-x-2 mb-4"
-        >
+        <form onSubmit={handleSearch} className="flex space-x-2 mb-4">
           <input
             type="text"
             placeholder="Search photos..."
@@ -59,17 +56,18 @@ export function SearchBar({ onSearch }: SearchBarProps) {
               <h3>Collection</h3>
               <li>See all</li>
             </div>
-
-            {collections?.map((collection: any) => (
-              <div key={collection.id} className="collection-card">
-                <img
-                  src={collection.cover_photo?.urls?.small}
-                  alt={collection.title}
-                  className="collection-image"
-                />
-                <h3 className="collection-title">{collection.title}</h3>
-              </div>
-            ))}
+            <div className="collections-container-card">
+              {collections?.map((collection: any) => (
+                <div key={collection.id} className="collection-card">
+                  <img
+                    src={collection.cover_photo?.urls?.small}
+                    alt={collection.title}
+                    className="collection-image"
+                  />
+                  <h3 className="collection-title">{collection.title}</h3>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

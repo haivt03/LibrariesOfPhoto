@@ -3,15 +3,15 @@
   margin-top: 20px;
   align-items: end;
 }
-/* SearchBar.css */
+
 
 .form-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   width: 1000px;
-  margin-left: 200px;
-  margin-right: 150px;
+  margin-left: 150px;
+  margin-right: 100px;
 }
 
 form {
@@ -53,6 +53,9 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
+.collections-container-card{
+   padding-bottom: 10px;
+}
 
 .collection-card {
   display: flex;
@@ -66,6 +69,11 @@ button:hover {
   gap: 16px;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.collection-card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* Shadow on hover */
 }
 
 .collection-image {
@@ -95,8 +103,10 @@ button:hover {
 
 .collections-container-text li {
   cursor: pointer;
+  margin-top: 5px;
 }
 
 .collections-container-text h3 {
   font-weight: bold;
+  margin-top: 5px;
 }

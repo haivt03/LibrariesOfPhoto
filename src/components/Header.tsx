@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
-import { fecthTopic } from "../api/unsplash";
+import { fetchTopic } from "../api/unsplash";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -29,7 +29,7 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
   useEffect(() => {
     const loadTopics = async () => {
       try {
-        const data = await fecthTopic();
+        const data = await fetchTopic();
         setTopics(data);
       } catch (error) {
         console.error("Failed to fetch topics:", error);
@@ -71,5 +71,4 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
     </div>
   );
 }
-
 
