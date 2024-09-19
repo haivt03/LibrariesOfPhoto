@@ -70,3 +70,10 @@ export interface TypePhoto {
     results: { id: string; title: string; cover_photo: TypePhoto }[];
   }
   
+  export interface TypeTopics{
+    id: string
+    title: string;
+    total_photos: number;
+    user: TypeUser;
+    cover_photo: TypePhoto;
+  }

@@ -1,0 +1,54 @@
+.topic-gallery-container {
+  padding: 16px;
+}
+
+.topic-gallery-container h1 {
+  padding: 16px;
+  font-size: 30px;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.topic-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.topic-card img {
+  width: 1000px;
+  height: 600px;
+  display: block;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.pagination button {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+.pagination button:hover {
+  background-color: #b0b0b0;
+}
+
+.pagination span {
+  font-size: 16px;
+}

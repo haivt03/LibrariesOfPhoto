@@ -49,8 +49,8 @@ export async function fetchStatisticsByPhoto(id: string): Promise<any> {
   return data;
 }
 
-export async function fetchTopic(): Promise<any> {
-  const url = `https://api.unsplash.com/topics?client_id=${accessKey}`;
+export async function fetchTopic(page: number = 1): Promise<any> {
+  const url = `https://api.unsplash.com/topics?page=${page}&client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Network response was not ok");

@@ -30,6 +30,10 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
     navigate(`/topics/${topicId}`);
   };
 
+  const handleOnclickSeeAll = () => {
+    navigate(`/topics/all`); 
+  };
+
   useEffect(() => {
     const loadTopics = async () => {
       try {
@@ -71,7 +75,7 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
               {topic.title}
             </li>
           ))}
-          <li className="topic-item">See all</li>
+          <li className="topic-item" onClick={handleOnclickSeeAll} >See all</li>
         </ul>
           <span></span>
       </nav>
