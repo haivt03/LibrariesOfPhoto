@@ -59,6 +59,29 @@ export async function fetchTopic(): Promise<any> {
   return data;
 }
 
+export async function fetchTopicPhotos(
+  topicId: string,
+  page: number,
+): Promise<any> {
+  const url = `https://api.unsplash.com/topics/${topicId}/photos?page=${page}&per_page=24&client_id=${accessKey}`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const topicDetailsUrl = `https://api.unsplash.com/topics/${topicId}?client_id=${accessKey}`;
+  const topicResponse = await fetch(topicDetailsUrl);
+  if (!topicResponse.ok) {
+    throw new Error("Failed to fetch topic details");
+  }
+
+  const topicDetails = await topicResponse.json();
+
+  const photos = await response.json();
+  return {topicDetails, photos};
+}
+
 export async function fetchCollection(per_page: number): Promise<any> {
   const url = `https://api.unsplash.com/collections?per_page=${per_page}&client_id=${accessKey}`;
   const response = await fetch(url);

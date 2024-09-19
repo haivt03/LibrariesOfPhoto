@@ -9,9 +9,9 @@ interface PhotoCardProps {
 
 export function PhotoCard({ photo }: PhotoCardProps) {
   const navigate = useNavigate();
-const handleOnclickMore = () =>{
-  navigate(`/photos/${photo.id}`)
-}
+  const handleOnclickMore = () => {
+    navigate(`/photos/${photo.id}`);
+  };
 
   return (
     <div className="photo-card-container mx-auto p-4">
@@ -41,7 +41,12 @@ const handleOnclickMore = () =>{
               By {photo.user.name}
             </span>
             <h2 className="photo-card-card-title">{photo.alt_description}</h2>
-            <button onClick={handleOnclickMore} className="photo-card-card-button">More</button>
+            <button
+              onClick={handleOnclickMore}
+              className="photo-card-card-button"
+            >
+              More
+            </button>
           </div>
         </article>
       </div>

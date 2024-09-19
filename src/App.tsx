@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { AuthorPage } from './pages/AuthorPage';
 import { PageDetailPhoto } from './pages/PageDetailPhoto';
+import { TopicPhotoPage } from './pages/TopicPhotoPage';
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ export function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/author/:username" element={<AuthorPage username={''} />} />
           <Route path="/photos/:imageId" element={<PageDetailPhoto/>} />
+          <Route path="/topics/:topicId" element={<TopicPhotoPage/>} />
         </Routes>
       </Router>
     </QueryClientProvider>

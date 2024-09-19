@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchPhotos } from '../api/unsplash';
 import { PhotoCard } from './PhotoCard';
 import './PhotoGallery.css'; 
+import { TypePhoto } from '../type/type';
 
 interface PhotoGalleryProps {
   query?: string;
@@ -24,7 +25,7 @@ export function PhotoGallery({ query = '' }: PhotoGalleryProps) {
   return (
     <div className="photo-gallery-container">
       <div className="photo-grid">
-        {data?.map((photo: any) => (
+        {data?.map((photo: TypePhoto) => (
           <div key={photo.id} className="photo-card">
             <PhotoCard photo={photo} />
           </div>

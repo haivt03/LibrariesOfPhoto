@@ -26,6 +26,10 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
     navigate("/home");
   };
 
+  const handleOnclickDetail = (topicId: string) => {
+    navigate(`/topics/${topicId}`);
+  };
+
   useEffect(() => {
     const loadTopics = async () => {
       try {
@@ -43,7 +47,7 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
     <div className="header-container">
       <form onSubmit={handleSearch} className="search-form">
         <button onClick={home} className="button-home">
-          Unsplashy
+          Unsplash
         </button>
         <input
           type="text"
@@ -59,16 +63,18 @@ export function HeaderHomePage({ onSearch }: SearchBarProps) {
       <nav className="topics-nav">
         <ul className="topics-list">
           {topics.map((topic) => (
-            <li key={topic.id} className="topic-item">
+            <li
+              onClick={() => handleOnclickDetail(topic.id)}
+              key={topic.id}
+              className="topic-item"
+            >
               {topic.title}
             </li>
           ))}
-          <li className="topic-item">
-            See all
-          </li>
+          <li className="topic-item">See all</li>
         </ul>
+          <span></span>
       </nav>
     </div>
   );
 }
-

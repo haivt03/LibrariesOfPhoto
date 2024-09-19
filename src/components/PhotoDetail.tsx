@@ -1,31 +1,39 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchImageDetails, fetchRelatedImages } from "../api/unsplash";
 import { TypePhoto, TypePhotoDetail, TypeTag } from "../type/type";
 import "./PhotoDetail.css";
+
 export function PhotosDetails() {
   const { imageId } = useParams<{ imageId: string }>();
+  const navigate = useNavigate();  
 
-  const [imageDetails, setImageDetails] = useState<TypePhotoDetail>();
+  const [imageDetails, setImageDetails] = useState<TypePhotoDetail | null>(null);
   const [relatedImages, setRelatedImages] = useState<TypePhoto[]>([]);
 
   useEffect(() => {
     const loadImageDetails = async () => {
       try {
-        const data = await fetchImageDetails(imageId!);
-        setImageDetails(data);
+        if (imageId) {
+          const data = await fetchImageDetails(imageId);
+          setImageDetails(data);
 
-        const relatedImagesData = await fetchRelatedImages(imageId!);
-        setRelatedImages(relatedImagesData.results);
+          const relatedImagesData = await fetchRelatedImages(imageId);
+          setRelatedImages(relatedImagesData.results);
+        }
       } catch (error) {
         console.error("Error fetching image details:", error);
       }
     };
 
     loadImageDetails();
-  }, [imageId]);
+  }, [imageId]);  
 
   if (!imageDetails) return <p>Loading image details...</p>;
+
+  const handleOnclickDetail = (imageId: string) => {
+    navigate(`/photos/${imageId}`);
+  };
 
   return (
     <div className="image-details-container">
@@ -54,7 +62,6 @@ export function PhotosDetails() {
         </div>
       </div>
 
-      {/* Image Uploader Info */}
       <div className="uploader-info">
         <a href={imageDetails.user.links.html} target="_blank" rel="noreferrer">
           <img
@@ -66,7 +73,6 @@ export function PhotosDetails() {
         <h3>Uploaded by {imageDetails.user.name}</h3>
       </div>
 
-      {/* Tags */}
       <div className="tags">
         <h4>Tags:</h4>
         <ul className="tag-list">
@@ -76,12 +82,12 @@ export function PhotosDetails() {
         </ul>
       </div>
 
-      {/* Related Images */}
       <div className="related-section">
         <h3>Related Images</h3>
         <div className="related-images-grid">
           {relatedImages.map((relatedImage: TypePhoto) => (
             <img
+              onClick={() => handleOnclickDetail(relatedImage.id)} 
               key={relatedImage.id}
               src={relatedImage.urls.small}
               alt={relatedImage.alt_description}
