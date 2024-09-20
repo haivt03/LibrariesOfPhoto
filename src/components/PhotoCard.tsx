@@ -1,5 +1,5 @@
 import { AiFillHeart, AiOutlinePlus } from "react-icons/ai";
-import "./PhotoCard.css";
+// import "./PhotoCard.css";
 import { TypePhoto } from "../type/type";
 import { useNavigate } from "react-router-dom";
 
@@ -14,36 +14,24 @@ export function PhotoCard({ photo }: PhotoCardProps) {
   };
 
   return (
-    <div className="photo-card-container mx-auto p-4">
-      <div className="photo-card-card-container">
-        <article className="photo-card-card-article">
+    <div className="photo-card-container mx-auto p-4 relative w-full max-w-md">
+      <div className="photo-card-card-container bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:-translate-y-1">
+        <article className="photo-card-card-article relative">
           <img
             src={photo.urls.small}
             alt={photo.alt_description}
-            className="photo-card-card-img"
+            className="photo-card-card-img w-full h-full object-cover"
           />
-          <div className="photo-card-button-group absolute top-0 right-0 p-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button
-              type="button"
-              className="photo-card-card-button photo-card-heart-button"
-            >
-              <AiFillHeart />
-            </button>
-            <button
-              type="button"
-              className="photo-card-card-button photo-card-plus-button"
-            >
-              <AiOutlinePlus />
-            </button>
-          </div>
           <div className="photo-card-card-data p-4">
-            <span className="photo-card-card-description">
+            <span className="photo-card-card-description text-sm text-gray-600">
               By {photo.user.name}
             </span>
-            <h2 className="photo-card-card-title">{photo.alt_description}</h2>
+            <h2 className="photo-card-card-title text-lg font-bold text-gray-800 mt-2 truncate">
+              {photo.alt_description}
+            </h2>
             <button
               onClick={handleOnclickMore}
-              className="photo-card-card-button"
+              className="photo-card-card-button mt-2 bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-400 transition"
             >
               More
             </button>

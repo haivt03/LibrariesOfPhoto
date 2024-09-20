@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPhotos } from '../api/unsplash';
 import { PhotoCard } from './PhotoCard';
-import './PhotoGallery.css'; 
 import { TypePhoto } from '../type/type';
 
 interface PhotoGalleryProps {
@@ -23,26 +22,28 @@ export function PhotoGallery({ query = '' }: PhotoGalleryProps) {
   if (error instanceof Error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className="photo-gallery-container">
-      <div className="photo-grid">
+    <div className="photo-gallery-container p-4">
+      <div className="photo-grid grid grid-cols-4 gap-4">
         {data?.map((photo: TypePhoto) => (
-          <div key={photo.id} className="photo-card">
+          <div key={photo.id} className="photo-card rounded-lg overflow-hidden shadow-md">
             <PhotoCard photo={photo} />
           </div>
         ))}
       </div>
 
-      <div className="pagination">
+      <div className="pagination flex justify-between items-center mt-4">
         <button
           onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
           disabled={page === 1}
+          className="bg-gray-300 px-4 py-2 rounded disabled:bg-gray-400 cursor-pointer"
         >
           Previous
         </button>
-        <span>Page {page}</span>
+        <span className="text-lg">Page {page}</span>
         <button
           onClick={() => setPage((prevPage) => prevPage + 1)}
           disabled={isFetching}
+          className="bg-gray-300 px-4 py-2 rounded disabled:bg-gray-400 cursor-pointer"
         >
           Next
         </button>
