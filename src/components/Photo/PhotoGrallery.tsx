@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchPhotos } from '../api/unsplash';
+import { fetchPhotos } from '../../api/unsplash';
 import { PhotoCard } from './PhotoCard';
-import { TypePhoto } from '../type/type';
+import { TypePhoto } from '../../type/type';
 
 interface PhotoGalleryProps {
   query?: string;

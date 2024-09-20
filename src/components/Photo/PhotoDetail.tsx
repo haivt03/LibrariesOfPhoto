@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchImageDetails, fetchRelatedImages } from "../api/unsplash";
-import { TypePhoto, TypePhotoDetail, TypeTag } from "../type/type";
+import { fetchImageDetails, fetchRelatedImages } from "../../api/unsplash";
+import { TypePhoto, TypePhotoDetail, TypeTag } from "../../type/type";
 
 export function PhotosDetails() {
   const { imageId } = useParams<{ imageId: string }>();

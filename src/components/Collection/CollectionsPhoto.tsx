@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCollectionPhotos } from "../api/unsplash";
-import { PhotoCard } from "./PhotoCard";
-import { TypePhoto } from "../type/type";
+import { fetchCollectionPhotos } from "../../api/unsplash";
+import { TypePhoto } from "../../type/type";
+import { PhotoCard } from "../Photo/PhotoCard";
 
 export function CollectionsPhoto() {
   const { collectionId } = useParams<{ collectionId: string }>();

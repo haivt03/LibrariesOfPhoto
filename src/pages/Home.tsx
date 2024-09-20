@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SearchBar } from '../components/SearchBar';
-import { PhotoGallery } from '../components/PhotoGrallery';
+import { PhotoGallery } from '../components/Photo/PhotoGrallery';
 import { HeaderHomePage } from '../components/Header';
 import Footer from '../components/Footer';
 

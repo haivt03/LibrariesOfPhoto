@@ -1,6 +1,4 @@
-import { AiFillHeart, AiOutlinePlus } from "react-icons/ai";
-// import "./PhotoCard.css";
-import { TypePhoto } from "../type/type";
+import { TypePhoto } from "../../type/type";
 import { useNavigate } from "react-router-dom";
 
 interface PhotoCardProps {

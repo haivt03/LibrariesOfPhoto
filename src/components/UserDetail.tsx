@@ -9,8 +9,8 @@ import {
 } from "../api/unsplash";
 import { useState } from "react";
 import { TypePhoto } from "../type/type";
-import { PhotoCard } from "./PhotoCard";
-import { CollectionCard } from "./CollectionCard";
+import { PhotoCard } from "./Photo/PhotoCard";
+import { CollectionCard } from "./Collection/CollectionCard";
 
 export function UserDetails() {
   const { username } = useParams<{ username: string }>();

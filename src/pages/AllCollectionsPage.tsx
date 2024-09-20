@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { HeaderHomePage } from '../components/Header';
 import Footer from '../components/Footer';
-import { Collections } from '../components/Collections';
+import { Collections } from '../components/Collection/Collections';
 
 export function AllCollectionPage() {
   const [query, setQuery] = useState('');

@@ -4,10 +4,9 @@ import { Home } from './pages/Home';
 import { PageDetailPhoto } from './pages/PageDetailPhoto';
 import { TopicPhotoPage } from './pages/TopicPhotoPage';
 import { AllTopicPage } from './pages/AllTopicsPage';
-import { CollectionsPhoto } from './components/CollectionsPhoto';
-import { UserDetails } from './components/UserDetail';
 import { AllCollectionPage } from './pages/AllCollectionsPage';
 import { UserPage } from './pages/UserPage';
+import { CollectionsPhoto } from './components/Collection/CollectionsPhoto';
 
 const queryClient = new QueryClient();
 

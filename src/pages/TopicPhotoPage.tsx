@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { HeaderHomePage } from '../components/Header';
 import Footer from '../components/Footer';
-import { TopicPhoto } from '../components/TopicPhoto';
+import { TopicPhoto } from '../components/Topic/TopicPhoto';
 
 export function TopicPhotoPage() {
   const [query, setQuery] = useState('');

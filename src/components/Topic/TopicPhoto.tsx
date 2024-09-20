@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchTopicPhotos } from "../api/unsplash";
-import { PhotoCard } from "./PhotoCard";
+import { fetchTopicPhotos } from "../../api/unsplash";
+import { PhotoCard } from "../Photo/PhotoCard";
 
 export function TopicPhoto() {
   const { topicId } = useParams<{ topicId: string }>();

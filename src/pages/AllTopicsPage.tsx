@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { HeaderHomePage } from '../components/Header';
 import Footer from '../components/Footer';
-import { Topics } from '../components/Topics';
+import { Topics } from '../components/Topic/Topics';
 
 export function AllTopicPage() {
   const [query, setQuery] = useState('');

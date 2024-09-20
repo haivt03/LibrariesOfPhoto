@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { HeaderHomePage } from '../components/Header';
 import Footer from '../components/Footer';
-import { PhotosDetails } from '../components/PhotoDetail';
+import { PhotosDetails } from '../components/Photo/PhotoDetail';
 
 export function PageDetailPhoto() {
   const [query, setQuery] = useState('');

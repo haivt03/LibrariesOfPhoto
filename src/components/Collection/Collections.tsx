@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCollection } from "../api/unsplash";
-import { TypeCollections } from "../type/type";
+import { fetchCollection } from "../../api/unsplash";
+import { TypeCollections } from "../../type/type";
 import { CollectionCard } from "./CollectionCard";
 
 export function Collections() {
