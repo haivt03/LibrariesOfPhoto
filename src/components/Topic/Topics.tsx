@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchTopic } from "../api/unsplash";
-import { TypeTopics } from "../type/type";
+import { fetchTopic } from "../../api/unsplash";
+import { TypeTopics } from "../../type/type";
 import { TopicsCard } from "./TopicsCard";
 
 export function Topics() {
