@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCollectionPhotos } from "../../api/unsplash";
 import { TypePhoto } from "../../type/type";
 import { PhotoCard } from "../Photo/PhotoCard";
+import clsx from "clsx";
 
 export function CollectionsPhoto() {
   const { collectionId } = useParams<{ collectionId: string }>();
@@ -13,18 +14,30 @@ export function CollectionsPhoto() {
     queryKey: ["collectionPhotos", collectionId, page],
     queryFn: () => fetchCollectionPhotos(collectionId!, page),
     enabled: !!collectionId,
+
     staleTime: 1000,
   });
 
-  if (isLoading) return <p>Loading image details...</p>;
-  if (error instanceof Error) return <p>Error: {error.message}</p>;
+  const handleOnclickMore = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
 
   const { collectionDetails, photos } = data;
-  const title = collectionDetails.title || "No Title Available";
-  const description =
-    collectionDetails.description || "No description available.";
-  const totalImages = collectionDetails.total_photos || 0;
+  const title = useMemo(() => {
+    return collectionDetails.title || "No Title Available";
+  }, [collectionDetails.title]);
 
+  const description = useMemo(() => {
+    return collectionDetails.description || "No description available.";
+  }, [collectionDetails.description]);
+
+  const totalImages = useMemo(() => {
+    return collectionDetails.total_images || 0;
+  }, [collectionDetails.photo_detail]);
+
+  if (isLoading) return <p>Loading image details...</p>;
+  if (!photos) return <p>The page is error</p>;
+  if (error instanceof Error) return <p>Error: {error.message}</p>;
   return (
     <div className="p-4">
       <div className="flex justify-between items-end bg-gray-100 p-5 rounded-lg shadow-md mb-5">
@@ -41,16 +54,18 @@ export function CollectionsPhoto() {
       </div>
 
       {/* Check if photos array is empty */}
-      {photos.length === 0 ? (
+      {photos.length === 0 && (
         <div className="text-center text-2xl">
-          <p >No photos available in this collection.</p>
+          <p>No photos available in this collection.</p>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg"
             alt="Placeholder"
             className="w-full max-w-lg mx-auto"
           />
         </div>
-      ) : (
+      )}
+
+      {photos.length !== 0 && (
         <div className="grid grid-cols-4 gap-4">
           {photos.map((photo: TypePhoto) => (
             <div
@@ -65,21 +80,21 @@ export function CollectionsPhoto() {
 
       <div className="flex justify-between items-center mt-4">
         <button
-          onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
+          onClick={handleOnclickMore}
           disabled={page === 1 || isFetching}
-          className={`px-4 py-2 rounded bg-gray-200 ${
-            page === 1 || isFetching ? "cursor-not-allowed bg-gray-300" : ""
-          }`}
+          className={clsx("px-4 py-2 rounded bg-gray-200", {
+            "cursor-not-allowed bg-gray-300": isFetching,
+          })}
         >
           Previous
         </button>
         <span className="text-lg">Page {page}</span>
         <button
-          onClick={() => setPage((prevPage) => prevPage + 1)}
+          onClick={handleOnclickMore}
           disabled={isFetching}
-          className={`px-4 py-2 rounded bg-gray-200 ${
-            isFetching ? "cursor-not-allowed bg-gray-300" : ""
-          }`}
+          className={clsx("px-4 py-2 rounded bg-gray-200", {
+            "cursor-not-allowed bg-gray-300": isFetching,
+          })}
         >
           Next
         </button>
