@@ -1,29 +1,31 @@
-import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTopicPhotos } from "../../api/unsplash";
 import { PhotoCard } from "../Photo/PhotoCard";
 import { TypeTopContributor } from "../../type/type.topic";
 import { TypePhoto } from "../../type/type.photo";
+import { useTopicPhotos } from "../../hooks/Topic/useTopicPhoto";
 
 export function TopicPhoto() {
   const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
+
+  const {
+    data,
+    error,
+    isLoading,
+    isFetching,
+    page,
+    incrementPage,
+    decrementPage,
+  } = useTopicPhotos(topicId);
 
   const handleOnclickUser = (userName: string) => {
     navigate(`/users/${userName}`);
   };
 
-  const { data, error, isLoading, isFetching } = useQuery({
-    queryKey: ["topicPhotos", topicId, page],
-    queryFn: () => fetchTopicPhotos(topicId!, page),
-    enabled: !!topicId,
-    staleTime: 1000,
-  });
   if (isLoading) return <p>Loading image details...</p>;
   if (error instanceof Error) return <p>Error: {error.message}</p>;
   if (!data) return <p>No data available</p>;
+
   const { topicDetails, photos } = data;
   const title = topicDetails.title || "No Title Available";
   const description = topicDetails.description || "No description available.";
@@ -82,17 +84,21 @@ export function TopicPhoto() {
 
       <div className="flex justify-between items-center mt-4">
         <button
-          onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
+          onClick={decrementPage}
           disabled={page === 1 || isFetching}
-          className={`bg-gray-300 border-none py-2 px-4 rounded ${page === 1 || isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400"}`}
+          className={`bg-gray-300 border-none py-2 px-4 rounded ${
+            page === 1 || isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400"
+          }`}
         >
           Previous
         </button>
         <span className="text-lg">Page {page}</span>
         <button
-          onClick={() => setPage((prevPage) => prevPage + 1)}
+          onClick={incrementPage}
           disabled={isFetching}
-          className={`bg-gray-300 border-none py-2 px-4 rounded ${isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400"}`}
+          className={`bg-gray-300 border-none py-2 px-4 rounded ${
+            isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400"
+          }`}
         >
           Next
         </button>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchTopic } from "../api/unsplash";
+import { fetchTopic } from "../hooks/Topic/useTopic";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;

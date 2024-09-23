@@ -1,10 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
-import { fetchCollectionHome } from "../api/unsplash";
-// import "./SearchBar.css";
 import { useNavigate } from "react-router-dom";
+import { useCollections } from "../hooks/useSearchBar";
 import { TypeCollections } from "../type/type.collection";
-
+import { useState } from "react";
 interface SearchBarProps {
   onSearch: (query: string) => void;
 }
@@ -26,16 +23,8 @@ export function SearchBar({ onSearch }: SearchBarProps) {
     navigate(`/collections/all`);
   };
 
-  const {
-    data: collections,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ["collections"],
-    queryFn: () => fetchCollectionHome(5),
-    placeholderData: () => [],
-    staleTime: 1000,
-  });
+  // Using the custom hook to fetch collections
+  const { data: collections, error, isLoading } = useCollections(5);
 
   return (
     <div className="searchbar-container flex mt-5 justify-around items-end">

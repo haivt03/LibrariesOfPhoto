@@ -1,29 +1,25 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { fetchCollectionPhotos } from "../../api/unsplash";
+import { useCollectionPhotos } from "../../hooks/Collection/useCollectionPhoto";
 import { PhotoCard } from "../Photo/PhotoCard";
-import { TypePhoto } from "../../type/type.photo";
 
 export function CollectionsPhoto() {
   const { collectionId } = useParams<{ collectionId: string }>();
-  const [page, setPage] = useState(1);
-
-  const { data, error, isLoading, isFetching } = useQuery({
-    queryKey: ["collectionPhotos", collectionId, page],
-    queryFn: () => fetchCollectionPhotos(collectionId!, page),
-    enabled: !!collectionId,
-    staleTime: 1000,
-  });
+  const {
+    collectionDetails,
+    photos,
+    page,
+    isLoading,
+    isFetching,
+    error,
+    setPage,
+  } = useCollectionPhotos(collectionId);
 
   if (isLoading) return <p>Loading image details...</p>;
-  if (error instanceof Error) return <p>Error: {error.message}</p>;
-  if (!data) return <p>No data available</p>;
-  
-  const { collectionDetails, photos } = data;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!collectionDetails || !photos) return <p>No data available</p>;
+
   const title = collectionDetails.title || "No Title Available";
-  const description =
-    collectionDetails.description || "No description available.";
+  const description = collectionDetails.description || "No description available.";
   const totalImages = collectionDetails.total_photos || 0;
 
   return (
@@ -41,7 +37,7 @@ export function CollectionsPhoto() {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-4">
-        {photos?.map((photo: TypePhoto) => (
+        {photos.map((photo) => (
           <div key={photo.id} className="rounded-lg overflow-hidden shadow-lg">
             <PhotoCard photo={photo} />
           </div>
@@ -50,7 +46,7 @@ export function CollectionsPhoto() {
 
       <div className="flex justify-between items-center mt-4">
         <button
-          onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
+          onClick={() => setPage(Math.max(page - 1, 1))}
           disabled={page === 1 || isFetching}
           className={`px-4 py-2 rounded bg-gray-200 ${page === 1 || isFetching ? "cursor-not-allowed bg-gray-300" : ""}`}
         >
@@ -58,7 +54,7 @@ export function CollectionsPhoto() {
         </button>
         <span className="text-lg">Page {page}</span>
         <button
-          onClick={() => setPage((prevPage) => prevPage + 1)}
+          onClick={() => setPage(page + 1)}
           disabled={isFetching}
           className={`px-4 py-2 rounded bg-gray-200 ${isFetching ? "cursor-not-allowed bg-gray-300" : ""}`}
         >

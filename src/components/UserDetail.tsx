@@ -1,90 +1,57 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { FaLocationDot, FaSquareInstagram } from "react-icons/fa6";
-import {
-  fetchAuthorInfo,
-  fetchUserPhotos,
-  fetchUserLikes,
-  fetchUserCollections,
-} from "../api/unsplash";
+import { useUserCollections, useUserInfo, useUserLikes, useUserPhotos } from "../hooks/useUserDetail";
 import { useState } from "react";
+import { TypePhoto } from "../type/type.photo";
 import { PhotoCard } from "./Photo/PhotoCard";
 import { CollectionCard } from "./Collection/CollectionCard";
-import { TypePhoto } from "../type/type.photo";
+import { FaLocationDot, FaSquareInstagram } from "react-icons/fa6";
 
 export function UserDetails() {
   const { username } = useParams<{ username: string }>();
   const [activeTab, setActiveTab] = useState<"photos" | "likes" | "collections">("photos");
 
-  // Fetch user info
-  const { data: userInfo, error: userError, isLoading: userLoading } = useQuery({
-    queryKey: ["userInfo", username],
-    queryFn: () => fetchAuthorInfo(username!),
-    enabled: !!username,
-    staleTime: 1000,
-  });
+  // Custom hooks for fetching user details
+  const { data: userInfo, error: userError, isLoading: userLoading } = useUserInfo(username!);
+  const { data: userPhotos, error: photosError, isLoading: photosLoading } = useUserPhotos(username!, activeTab === "photos");
+  const { data: likedPhotos, error: likesError, isLoading: likesLoading } = useUserLikes(username!, activeTab === "likes");
+  const { data: userCollections, error: collectionsError, isLoading: collectionsLoading } = useUserCollections(username!, activeTab === "collections");
 
-  // Fetch user's photos
-  const { data: userPhotos, error: photosError, isLoading: photosLoading } = useQuery({
-    queryKey: ["userPhotos", username],
-    queryFn: () => fetchUserPhotos(username!),
-    enabled: !!username,
-    staleTime: 1000,
-  });
-
-  // Fetch user's liked photos
-  const { data: likedPhotos, error: likesError, isLoading: likesLoading } = useQuery({
-    queryKey: ["userLikes", username],
-    queryFn: () => fetchUserLikes(username!),
-    enabled: !!username,
-    staleTime: 1000,
-  });
-
-  // Fetch user's collections
-  const { data: userCollections, error: collectionsError, isLoading: collectionsLoading } = useQuery({
-    queryKey: ["userCollections", username],
-    queryFn: () => fetchUserCollections(username!),
-    enabled: !!username,
-    staleTime: 1000,
-  });
-
-  if (userLoading || photosLoading || likesLoading || collectionsLoading)
-    return <p className="text-center">Loading user details...</p>;
+  if (userLoading) return <p className="text-center">Loading user details...</p>;
   if (userError instanceof Error) return <p className="text-center">Error: {userError.message}</p>;
 
   const renderContent = () => {
     if (activeTab === "photos") {
       if (photosLoading) return <p>Loading photos...</p>;
       if (photosError instanceof Error) return <p>Error: {photosError.message}</p>;
-      return (
+      return userPhotos?.length ? (
         <div className="grid grid-cols-4 gap-5">
-          {userPhotos?.map((photo: TypePhoto) => (
+          {userPhotos.map((photo: TypePhoto) => (
             <PhotoCard key={photo.id} photo={photo} />
           ))}
         </div>
-      );
+      ) : <p>No photos available.</p>;
     } else if (activeTab === "likes") {
       if (likesLoading) return <p>Loading liked photos...</p>;
       if (likesError instanceof Error) return <p>Error: {likesError.message}</p>;
-      return (
+      return likedPhotos?.length ? (
         <div className="grid grid-cols-4 gap-5">
-          {likedPhotos?.map((photo: any) => (
+          {likedPhotos.map((photo: TypePhoto) => (
             <PhotoCard key={photo.id} photo={photo} />
           ))}
         </div>
-      );
+      ) : <p>No liked photos available.</p>;
     } else if (activeTab === "collections") {
       if (collectionsLoading) return <p>Loading collections...</p>;
       if (collectionsError instanceof Error) return <p>Error: {collectionsError.message}</p>;
-      return (
+      return userCollections?.length ? (
         <div className="grid grid-cols-4 gap-5">
-          {userCollections?.map((collection: any) => (
+          {userCollections.map((collection: any) => (
             <div key={collection.id} className="collection-card">
               <CollectionCard collection={collection} />
             </div>
           ))}
         </div>
-      );
+      ) : <p>No collections available.</p>;
     }
   };
 
@@ -113,12 +80,15 @@ export function UserDetails() {
         </div>
       </div>
       <hr className="my-5 border-gray-300" />
+
       {/* Tabs Section */}
       <div className="flex justify-center mb-5">
         {["photos", "likes", "collections"].map((tab) => (
           <button
             key={tab}
-            className={`px-4 py-2 mx-1 rounded transition-colors ${activeTab === tab ? "bg-gray-800 text-white" : "bg-gray-200"} hover:bg-gray-300`}
+            className={`px-4 py-2 mx-1 rounded transition-colors ${
+              activeTab === tab ? "bg-gray-800 text-white" : "bg-gray-200"
+            } hover:bg-gray-300`}
             onClick={() => setActiveTab(tab as "photos" | "likes" | "collections")}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}

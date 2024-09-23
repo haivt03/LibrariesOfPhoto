@@ -1,43 +1,24 @@
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchImageDetails, fetchRelatedImages } from "../../api/unsplash";
-import { TypePhoto, TypePhotoDetail } from "../../type/type.photo";
+import { usePhotoDetails } from "../../hooks/Photo/usePhotoDetail";
 import { TypeTag } from "../../type/type";
 
 export function PhotosDetails() {
   const { imageId } = useParams<{ imageId: string }>();
   const navigate = useNavigate();
-
-  const [imageDetails, setImageDetails] = useState<TypePhotoDetail | null>(null);
-  const [relatedImages, setRelatedImages] = useState<TypePhoto[]>([]);
+  
+  const { imageDetails, relatedImages, isLoading, error } = usePhotoDetails(imageId);
 
   const handleOnclickUser = (userName: string) => {
     navigate(`/users/${userName}`);
   };
 
-  useEffect(() => {
-    const loadImageDetails = async () => {
-      try {
-        if (imageId) {
-          const data: TypePhotoDetail = await fetchImageDetails(imageId);
-          setImageDetails(data);
-
-          const relatedImagesData = await fetchRelatedImages(imageId);
-          setRelatedImages(relatedImagesData.results);
-        }
-      } catch (error) {
-        console.error("Error fetching image details:", error);
-      }
-    };
-
-    loadImageDetails();
-  }, [imageId]);
-
-  if (!imageDetails) return <p className="text-center">Loading image details...</p>;
-
   const handleOnclickDetail = (imageId: string) => {
     navigate(`/photos/${imageId}`);
   };
+
+  if (isLoading) return <p className="text-center">Loading image details...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!imageDetails) return <p>No data available</p>;
 
   return (
     <div className="flex flex-col p-5 max-w-5xl mx-auto">
@@ -87,7 +68,7 @@ export function PhotosDetails() {
       <div className="mt-10">
         <h3 className="mb-2 font-semibold">Related Images</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {relatedImages.map((relatedImage: TypePhoto) => (
+          {relatedImages.map((relatedImage) => (
             <img
               onClick={() => handleOnclickDetail(relatedImage.id)}
               key={relatedImage.id}

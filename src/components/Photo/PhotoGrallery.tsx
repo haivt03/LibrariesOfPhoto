@@ -1,29 +1,19 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchPhotos } from '../../api/unsplash';
-import { PhotoCard } from './PhotoCard';
-import { TypePhoto } from '../../type/type.photo';
+import { usePhotoGallery } from "../../hooks/Photo/usePhoto";
+import { TypePhoto } from "../../type/type.photo";
+import { PhotoCard } from "./PhotoCard";
 
-interface PhotoGalleryProps {
-  query?: string;
-}
-
-export function PhotoGallery({ query = '' }: PhotoGalleryProps) {
-  const [page, setPage] = useState(1);
-
-  const { data, error, isLoading, isFetching } = useQuery({
-    queryKey: ['photos', query, page],
-    queryFn: () => fetchPhotos(query, page),
-    placeholderData: () => [],
-    staleTime: 1000,
-  });
+export function PhotoGallery({ query = '' }) {
+  const { data, error, isLoading, isFetching, page, nextPage, prevPage } = usePhotoGallery(query);
 
   if (isLoading) return <p>Loading...</p>;
+
   if (error instanceof Error) return <p>Error: {error.message}</p>;
+
+  if (data?.length === 0) return <p>No results found for "{query}"</p>;
 
   return (
     <div className="photo-gallery-container p-4">
-      <div className="photo-grid grid grid-cols-4 gap-4">
+      <div className="photo-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {data?.map((photo: TypePhoto) => (
           <div key={photo.id} className="photo-card rounded-lg overflow-hidden shadow-md">
             <PhotoCard photo={photo} />
@@ -33,21 +23,22 @@ export function PhotoGallery({ query = '' }: PhotoGalleryProps) {
 
       <div className="pagination flex justify-between items-center mt-4">
         <button
-          onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
-          disabled={page === 1}
+          onClick={prevPage}
+          disabled={page === 1 || isFetching}
           className="bg-gray-300 px-4 py-2 rounded disabled:bg-gray-400 cursor-pointer"
         >
           Previous
         </button>
         <span className="text-lg">Page {page}</span>
         <button
-          onClick={() => setPage((prevPage) => prevPage + 1)}
+          onClick={nextPage}
           disabled={isFetching}
           className="bg-gray-300 px-4 py-2 rounded disabled:bg-gray-400 cursor-pointer"
         >
-          Next
+          {isFetching ? 'Loading...' : 'Next'}
         </button>
       </div>
+
       {isFetching && <p>Fetching more data...</p>}
     </div>
   );
