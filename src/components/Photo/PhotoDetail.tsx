@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchImageDetails, fetchRelatedImages } from "../../api/unsplash";
-import { TypePhoto, TypePhotoDetail, TypeTag } from "../../type/type";
+import { TypePhoto, TypePhotoDetail } from "../../type/type.photo";
+import { TypeTag } from "../../type/type";
 
 export function PhotosDetails() {
   const { imageId } = useParams<{ imageId: string }>();
@@ -18,7 +19,7 @@ export function PhotosDetails() {
     const loadImageDetails = async () => {
       try {
         if (imageId) {
-          const data = await fetchImageDetails(imageId);
+          const data: TypePhotoDetail = await fetchImageDetails(imageId);
           setImageDetails(data);
 
           const relatedImagesData = await fetchRelatedImages(imageId);

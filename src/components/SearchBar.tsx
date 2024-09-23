@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { fetchCollectionHome } from "../api/unsplash";
 // import "./SearchBar.css";
 import { useNavigate } from "react-router-dom";
-import { TypeCollections } from "../type/type";
+import { TypeCollections } from "../type/type.collection";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;

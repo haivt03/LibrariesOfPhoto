@@ -1,10 +1,16 @@
+import { SearchPhotosResponse } from "../type/type";
+import { TypeCollections } from "../type/type.collection";
+import { TypePhoto, TypePhotoDetail } from "../type/type.photo";
+import { TypeTopics } from "../type/type.topic";
+import { TypeUserDetail } from "../type/type.user";
+
 const accessKey = "HqrLqnl1Wza8zGXbn1EWDTYf4_UhOnRSiV4HhYMzzqU";
 
 export async function fetchPhotos(
   query: string = "",
   page: number = 1,
   per_page: number = 24,
-): Promise<any[]> {
+): Promise<TypePhoto[]> {
   const url = query
     ? `https://api.unsplash.com/search/photos?page=${page}&query=${query}&per_page=${per_page}&client_id=${accessKey}`
     : `https://api.unsplash.com/photos?page=${page}&per_page=${per_page}&client_id=${accessKey}`;
@@ -16,7 +22,9 @@ export async function fetchPhotos(
   return query ? data.results : data;
 }
 
-export async function fetchAuthorInfo(username: string): Promise<any> {
+export async function fetchAuthorInfo(
+  username: string,
+): Promise<TypeUserDetail> {
   const url = `https://api.unsplash.com/users/${username}?client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
@@ -25,7 +33,9 @@ export async function fetchAuthorInfo(username: string): Promise<any> {
   return response.json();
 }
 
-export async function fetchUserPhotos(username: string): Promise<any> {
+export async function fetchUserPhotos(
+  username: string,
+): Promise<TypePhoto[]> {
   const url = `https://api.unsplash.com/users/${username}/photos?client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
@@ -34,7 +44,7 @@ export async function fetchUserPhotos(username: string): Promise<any> {
   return response.json();
 }
 
-export async function fetchUserLikes(username: string): Promise<any> {
+export async function fetchUserLikes(username: string): Promise<TypePhoto[]> {
   const url = `https://api.unsplash.com/users/${username}/likes?client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
@@ -43,7 +53,7 @@ export async function fetchUserLikes(username: string): Promise<any> {
   return response.json();
 }
 
-export async function fetchUserCollections(username: string): Promise<any> {
+export async function fetchUserCollections(username: string): Promise<TypeCollections[]> {
   const url = `https://api.unsplash.com/users/${username}/collections?client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
@@ -52,17 +62,7 @@ export async function fetchUserCollections(username: string): Promise<any> {
   return response.json();
 }
 
-export async function fetchStatisticsByPhoto(id: string): Promise<any> {
-  const url = `https://api.unsplash.com/photos/${id}/statistics?client_id=${accessKey}`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  const data = await response.json();
-  return data;
-}
-
-export async function fetchTopic(page: number = 1): Promise<any> {
+export async function fetchTopic(page: number = 1): Promise<TypeTopics[]> {
   const url = `https://api.unsplash.com/topics?page=${page}&client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
@@ -75,7 +75,7 @@ export async function fetchTopic(page: number = 1): Promise<any> {
 export async function fetchTopicPhotos(
   topicId: string,
   page: number,
-): Promise<any> {
+): Promise<{topicDetails: TypeTopics, photos: TypePhoto[]}> {
   const url = `https://api.unsplash.com/topics/${topicId}/photos?page=${page}&per_page=24&client_id=${accessKey}`;
 
   const response = await fetch(url);
@@ -98,7 +98,7 @@ export async function fetchTopicPhotos(
 export async function fetchCollectionPhotos(
   collectionId: string,
   page: number,
-): Promise<any> {
+): Promise<{collectionDetails: TypeCollections,photos: TypePhoto[]}> {
   const url = `https://api.unsplash.com/collections/${collectionId}/photos?page=${page}&per_page=24&client_id=${accessKey}`;
 
   const response = await fetch(url);
@@ -118,7 +118,7 @@ export async function fetchCollectionPhotos(
   return { collectionDetails, photos };
 }
 
-export async function fetchCollection(page: number = 1): Promise<any> {
+export async function fetchCollection(page: number = 1): Promise<TypeCollections[]> {
   const url = `https://api.unsplash.com/collections?page=${page}&per_page=22&client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
@@ -128,7 +128,7 @@ export async function fetchCollection(page: number = 1): Promise<any> {
   return data;
 }
 
-export async function fetchCollectionHome(page: number): Promise<any> {
+export async function fetchCollectionHome(page: number): Promise<TypeCollections[]> {
   const url = `https://api.unsplash.com/collections?per_page=${page}&client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
@@ -138,7 +138,7 @@ export async function fetchCollectionHome(page: number): Promise<any> {
   return data;
 }
 
-export async function fetchImageDetails(imageId: string): Promise<any> {
+export async function fetchImageDetails(imageId: string): Promise<TypePhotoDetail> {
   const url = `https://api.unsplash.com/photos/${imageId}?client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
@@ -148,21 +148,11 @@ export async function fetchImageDetails(imageId: string): Promise<any> {
   return data;
 }
 
-export async function fetchRelatedImages(imageId: string): Promise<any> {
+export async function fetchRelatedImages(imageId: string): Promise<TypePhoto> {
   const url = `https://api.unsplash.com/photos/${imageId}/related?client_id=${accessKey}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch related images");
-  }
-  const data = await response.json();
-  return data;
-}
-
-export async function fetchRelatedCollections(imageId: string): Promise<any> {
-  const url = `https://api.unsplash.com/collections/${imageId}/related?client_id=${accessKey}`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Failed to fetch related collections");
   }
   const data = await response.json();
   return data;

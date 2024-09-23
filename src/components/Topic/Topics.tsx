@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchTopic } from "../api/unsplash";
-import { TypeTopics } from "../type/type";
+import { fetchTopic } from "../../api/unsplash";
 import { TopicsCard } from "./TopicsCard";
+import { TypeTopics } from "../../type/type.topic";
 
 export function Topics() {
   const [page, setPage] = useState(1);
@@ -10,7 +10,6 @@ export function Topics() {
   const { data, error, isLoading, isFetching } = useQuery({
     queryKey: ["topics", page], 
     queryFn: () => fetchTopic(page),
-    placeholderData: () => [],
     staleTime: 1000,
   });
 

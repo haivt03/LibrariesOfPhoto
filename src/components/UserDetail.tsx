@@ -8,9 +8,9 @@ import {
   fetchUserCollections,
 } from "../api/unsplash";
 import { useState } from "react";
-import { TypePhoto } from "../type/type";
 import { PhotoCard } from "./Photo/PhotoCard";
 import { CollectionCard } from "./Collection/CollectionCard";
+import { TypePhoto } from "../type/type.photo";
 
 export function UserDetails() {
   const { username } = useParams<{ username: string }>();
@@ -93,7 +93,7 @@ export function UserDetails() {
       {/* Profile Info */}
       <div className="text-center mb-5">
         <img
-          src={userInfo?.profile_image?.large}
+          src={userInfo?.profile_image?.urls.large}
           alt={userInfo?.name}
           className="w-36 h-36 rounded-full object-cover mb-2"
         />

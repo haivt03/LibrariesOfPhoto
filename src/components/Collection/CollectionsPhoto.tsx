@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCollectionPhotos } from "../../api/unsplash";
-import { TypePhoto } from "../../type/type";
 import { PhotoCard } from "../Photo/PhotoCard";
+import { TypePhoto } from "../../type/type.photo";
 
 export function CollectionsPhoto() {
   const { collectionId } = useParams<{ collectionId: string }>();
@@ -18,9 +18,12 @@ export function CollectionsPhoto() {
 
   if (isLoading) return <p>Loading image details...</p>;
   if (error instanceof Error) return <p>Error: {error.message}</p>;
+  if (!data) return <p>No data available</p>;
+  
   const { collectionDetails, photos } = data;
   const title = collectionDetails.title || "No Title Available";
-  const description = collectionDetails.description || "No description available.";
+  const description =
+    collectionDetails.description || "No description available.";
   const totalImages = collectionDetails.total_photos || 0;
 
   return (
@@ -28,7 +31,9 @@ export function CollectionsPhoto() {
       <div className="flex justify-between items-end bg-gray-100 p-5 rounded-lg shadow-md mb-5">
         <div className="max-w-3/4 pb-8 pl-8">
           <h1 className="text-3xl text-gray-800 mb-2">{title}</h1>
-          <h2 className="text-xl text-gray-600 mb-1">Total images: {totalImages}</h2>
+          <h2 className="text-xl text-gray-600 mb-1">
+            Total images: {totalImages}
+          </h2>
           <h3 className="text-gray-500">{description}</h3>
         </div>
         <div className="max-w-1/3 bg-white p-4 rounded-lg shadow-md mr-8">

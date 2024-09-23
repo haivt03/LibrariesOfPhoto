@@ -1,5 +1,5 @@
-import { TypePhoto } from "../../type/type";
 import { useNavigate } from "react-router-dom";
+import { TypePhoto } from "../../type/type.photo";
 
 interface PhotoCardProps {
   photo: TypePhoto;
