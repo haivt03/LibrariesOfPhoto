@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { TypePreviewPhoto, TypeTopics } from "../type/type";
+import { TypeTopics } from "../../type/type.topic";
+import { TypePreviewPhoto } from "../../type/type.photo";
 
 interface PhotoCardProps {
   topics: TypeTopics;
