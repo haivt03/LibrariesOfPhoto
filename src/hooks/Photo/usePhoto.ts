@@ -2,16 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { TypePhoto } from "../../type/type.photo";
 
-const accessKey = "HqrLqnl1Wza8zGXbn1EWDTYf4_UhOnRSiV4HhYMzzqU";
-
 export async function fetchPhotos(
   query: string = "",
   page: number = 1,
   per_page: number = 24,
 ): Promise<TypePhoto[]> {
   const url = query
-    ? `https://api.unsplash.com/search/photos?page=${page}&query=${query}&per_page=${per_page}&client_id=${accessKey}`
-    : `https://api.unsplash.com/photos?page=${page}&per_page=${per_page}&client_id=${accessKey}`;
+    ? `${process.env.VITE_API_UNSPLASH_URL}search/photos?page=${page}&query=${query}&per_page=${per_page}&client_id=${process.env.VITE_API_URL}`
+    : `${process.env.VITE_API_UNSPLASH_URL}photos?page=${page}&per_page=${per_page}&client_id=${process.env.VITE_API_URL}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Network response was not ok");

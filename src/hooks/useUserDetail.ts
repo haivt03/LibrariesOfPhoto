@@ -3,12 +3,10 @@ import { TypeCollections } from "../type/type.collection";
 import { TypePhoto } from "../type/type.photo";
 import { TypeUserDetail } from "../type/type.user";
 
-const accessKey = "HqrLqnl1Wza8zGXbn1EWDTYf4_UhOnRSiV4HhYMzzqU";
-
 export async function fetchAuthorInfo(
   username: string,
 ): Promise<TypeUserDetail> {
-  const url = `https://api.unsplash.com/users/${username}?client_id=${accessKey}`;
+  const url = `${process.env.VITE_API_UNSPLASH_URL}users/${username}?client_id=${process.env.VITE_API_URL}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch user details");
@@ -19,7 +17,7 @@ export async function fetchAuthorInfo(
 export async function fetchUserPhotos(
   username: string,
 ): Promise<TypePhoto[]> {
-  const url = `https://api.unsplash.com/users/${username}/photos?client_id=${accessKey}`;
+  const url = `${process.env.VITE_API_UNSPLASH_URL}users/${username}/photos?client_id=${process.env.VITE_API_URL}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch user photos");
@@ -28,7 +26,7 @@ export async function fetchUserPhotos(
 }
 
 export async function fetchUserLikes(username: string): Promise<TypePhoto[]> {
-  const url = `https://api.unsplash.com/users/${username}/likes?client_id=${accessKey}`;
+  const url = `${process.env.VITE_API_UNSPLASH_URL}users/${username}/likes?client_id=${process.env.VITE_API_URL}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch liked photos");
@@ -37,7 +35,7 @@ export async function fetchUserLikes(username: string): Promise<TypePhoto[]> {
 }
 
 export async function fetchUserCollections(username: string): Promise<TypeCollections[]> {
-  const url = `https://api.unsplash.com/users/${username}/collections?client_id=${accessKey}`;
+  const url = `${process.env.VITE_API_UNSPLASH_URL}users/${username}/collections?client_id=${process.env.VITE_API_URL}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch user collections");

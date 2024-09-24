@@ -2,12 +2,10 @@ import { useState } from "react";
 import { TypeCollections } from "../../type/type.collection";
 import { useQuery } from "@tanstack/react-query";
 
-const accessKey = "HqrLqnl1Wza8zGXbn1EWDTYf4_UhOnRSiV4HhYMzzqU";
-
 export async function fetchCollection(
   page: number = 1,
 ): Promise<TypeCollections[]> {
-  const url = `https://api.unsplash.com/collections?page=${page}&per_page=22&client_id=${accessKey}`;
+  const url = `${process.env.VITE_API_UNSPLASH_URL}collections?page=${page}&per_page=22&client_id=${process.env.VITE_API_URL}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -28,7 +26,6 @@ export function useCollections() {
 
   const nextPage = () => setPage((prevPage) => prevPage + 1);
   const prevPage = () => setPage((prevPage) => Math.max(prevPage - 1, 1));
-
   return {
     data,
     error,

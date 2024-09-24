@@ -2,10 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { TypeTopics } from "../../type/type.topic";
 
-const accessKey = "HqrLqnl1Wza8zGXbn1EWDTYf4_UhOnRSiV4HhYMzzqU";
-
 export async function fetchTopic(page: number = 1): Promise<TypeTopics[]> {
-    const url = `https://api.unsplash.com/topics?page=${page}&client_id=${accessKey}`;
+    const url = `${process.env.VITE_API_UNSPLASH_URL}topics?page=${page}&client_id=${process.env.VITE_API_URL}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Network response was not ok");

@@ -1,5 +1,6 @@
 import { useTopics } from "../../hooks/Topic/useTopic";
 import { TopicsCard } from "./TopicsCard";
+import clsx from "clsx";
 
 export function Topics() {
   const { data, error, isLoading, isFetching, page, nextPage, prevPage } =
@@ -23,7 +24,12 @@ export function Topics() {
         <button
           onClick={prevPage}
           disabled={page === 1 || isFetching}
-          className={`bg-gray-300 py-2 px-4 rounded ${page === 1 || isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400"}`}
+          className={clsx(
+            "bg-gray-300 py-2 px-4 rounded",
+            page === 1 || isFetching
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-gray-400",
+          )}
         >
           Previous
         </button>
@@ -31,7 +37,10 @@ export function Topics() {
         <button
           onClick={nextPage}
           disabled={isFetching}
-          className={`bg-gray-300 py-2 px-4 rounded ${isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400"}`}
+          className={clsx(
+            "bg-gray-300 py-2 px-4 rounded",
+            isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400",
+          )}
         >
           Next
         </button>

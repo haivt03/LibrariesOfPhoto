@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { TypePhoto, TypePhotoDetail } from "../../type/type.photo";
 
-const accessKey = "HqrLqnl1Wza8zGXbn1EWDTYf4_UhOnRSiV4HhYMzzqU";
-
 export async function fetchImageDetails(
   imageId: string,
 ): Promise<TypePhotoDetail> {
-  const url = `https://api.unsplash.com/photos/${imageId}?client_id=${accessKey}`;
+  const url = `${process.env.VITE_API_UNSPLASH_URL}photos/${imageId}?client_id=${process.env.VITE_API_URL}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch image details");
@@ -16,7 +14,7 @@ export async function fetchImageDetails(
 }
 
 export async function fetchRelatedImages(imageId: string): Promise<TypePhoto> {
-  const url = `https://api.unsplash.com/photos/${imageId}/related?client_id=${accessKey}`;
+  const url = `${process.env.VITE_API_UNSPLASH_URL}photos/${imageId}/related?client_id=${process.env.VITE_API_URL}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch related images");

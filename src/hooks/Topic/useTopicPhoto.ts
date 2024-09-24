@@ -3,20 +3,18 @@ import { useQuery } from "@tanstack/react-query";
 import { TypeTopics } from "../../type/type.topic";
 import { TypePhoto } from "../../type/type.photo";
 
-const accessKey = "HqrLqnl1Wza8zGXbn1EWDTYf4_UhOnRSiV4HhYMzzqU";
-
 export async function fetchTopicPhotos(
   topicId: string,
   page: number,
 ): Promise<{ topicDetails: TypeTopics; photos: TypePhoto[] }> {
-  const url = `https://api.unsplash.com/topics/${topicId}/photos?page=${page}&per_page=24&client_id=${accessKey}`;
+  const url = `${process.env.VITE_API_UNSPLASH_URL}topics/${topicId}/photos?page=${page}&per_page=24&client_id=${process.env.VITE_API_URL}`;
 
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
 
-  const topicDetailsUrl = `https://api.unsplash.com/topics/${topicId}?client_id=${accessKey}`;
+  const topicDetailsUrl = `${process.env.VITE_API_UNSPLASH_URL}topics/${topicId}?client_id=${process.env.VITE_API_URL}`;
   const topicResponse = await fetch(topicDetailsUrl);
   if (!topicResponse.ok) {
     throw new Error("Failed to fetch topic details");

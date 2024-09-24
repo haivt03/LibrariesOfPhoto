@@ -3,6 +3,7 @@ import { PhotoCard } from "../Photo/PhotoCard";
 import { TypeTopContributor } from "../../type/type.topic";
 import { TypePhoto } from "../../type/type.photo";
 import { useTopicPhotos } from "../../hooks/Topic/useTopicPhoto";
+import clsx from "clsx";
 
 export function TopicPhoto() {
   const { topicId } = useParams<{ topicId: string }>();
@@ -47,27 +48,29 @@ export function TopicPhoto() {
           </h3>
           {topicDetails.top_contributors?.length > 0 ? (
             <ul className="list-none p-0">
-              {topicDetails.top_contributors.map((contributor: TypeTopContributor) => (
-                <li
-                  key={contributor.id}
-                  className="flex items-center mb-4 cursor-pointer"
-                  onClick={() => handleOnclickUser(contributor.username)}
-                >
-                  <img
-                    src={contributor.profile_image.small}
-                    alt={contributor.id}
-                    className="w-12 h-12 rounded-full border-2 border-blue-500 mr-3"
-                  />
-                  <div>
-                    <h2 className="text-lg text-gray-600">
-                      {contributor.name}
-                    </h2>
-                    <h3 className="text-sm text-gray-500">
-                      {contributor.username}
-                    </h3>
-                  </div>
-                </li>
-              ))}
+              {topicDetails.top_contributors.map(
+                (contributor: TypeTopContributor) => (
+                  <li
+                    key={contributor.id}
+                    className="flex items-center mb-4 cursor-pointer"
+                    onClick={() => handleOnclickUser(contributor.username)}
+                  >
+                    <img
+                      src={contributor.profile_image.small}
+                      alt={contributor.id}
+                      className="w-12 h-12 rounded-full border-2 border-blue-500 mr-3"
+                    />
+                    <div>
+                      <h2 className="text-lg text-gray-600">
+                        {contributor.name}
+                      </h2>
+                      <h3 className="text-sm text-gray-500">
+                        {contributor.username}
+                      </h3>
+                    </div>
+                  </li>
+                ),
+              )}
             </ul>
           ) : (
             <p>No contributors available</p>
@@ -86,9 +89,12 @@ export function TopicPhoto() {
         <button
           onClick={decrementPage}
           disabled={page === 1 || isFetching}
-          className={`bg-gray-300 border-none py-2 px-4 rounded ${
-            page === 1 || isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400"
-          }`}
+          className={clsx(
+            "bg-gray-300 border-none py-2 px-4 rounded",
+            page === 1 || isFetching
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-gray-400",
+          )}
         >
           Previous
         </button>
@@ -96,9 +102,10 @@ export function TopicPhoto() {
         <button
           onClick={incrementPage}
           disabled={isFetching}
-          className={`bg-gray-300 border-none py-2 px-4 rounded ${
-            isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400"
-          }`}
+          className={clsx(
+            "bg-gray-300 border-none py-2 px-4 rounded",
+            isFetching ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-400",
+          )}
         >
           Next
         </button>

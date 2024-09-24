@@ -20,3 +20,5 @@ export interface SearchPhotosResponse {
   total_pages: number;
   results: TypePhoto[];
 }
+
+export type Tab = "photos" | "likes" | "collections";
