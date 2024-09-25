@@ -18,7 +18,6 @@ export function useTopics() {
     const { data, error, isLoading, isFetching } = useQuery({
       queryKey: ["topics", page], 
       queryFn: () => fetchTopic(page),
-      staleTime: 1000,
     });
   
     const nextPage = () => setPage((prevPage) => prevPage + 1);
