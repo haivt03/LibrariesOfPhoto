@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import { SearchBar } from '../components/SearchBar';
-import { PhotoGallery } from '../components/Photo/PhotoGrallery';
 import { HeaderHomePage } from '../components/Header';
 import Footer from '../components/Footer';
+import { Topics } from '../components/Topic/Topics';
 
-export function Home() {
+export function AllTopicPage() {
   const [query, setQuery] = useState('');
 
   return (
     <div className="container mx-auto p-4">
       <HeaderHomePage onSearch={setQuery}/>
       <hr/>
-      <SearchBar onSearch={setQuery} />
-      <PhotoGallery query={query} />
+      <Topics/>
       <Footer/>
     </div>
   );
